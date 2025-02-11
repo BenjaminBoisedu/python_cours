@@ -16,6 +16,31 @@
 
 ## GET / : Renvoie la liste des produits
 
+```json
+{
+  "products": [
+    {
+      "name": "Brown eggs",
+      "id": 1,
+      "in_stock": true,
+      "description": "Raw organic brown eggs in a basket",
+      "price": 28.1,
+      "weight": 400,
+      "image": "0.jpg"
+    },
+    {
+      "description": "Sweet fresh stawberry on the wooden table",
+      "image": "1.jpg",
+      "in_stock": true,
+      "weight": 299,
+      "id": 2,
+      "name": "Sweet fresh stawberry",
+      "price": 29.45
+    }
+  ]
+}
+```
+
 ## GET /order/<int:id> : Renvoie les informations d'une commande
 
 ```json
