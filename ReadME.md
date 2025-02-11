@@ -18,6 +18,26 @@
 
 ## GET /order/<int:id> : Renvoie les informations d'une commande
 
+```json
+{
+  "order": {
+    "id": 6543,
+    "total_price": 9148,
+    "total_price_tax": 10520.2,
+    "email": null,
+    "credit_card": {},
+    "shipping_information": {},
+    "paid": false,
+    "transaction": {},
+    "product": {
+      "id": 123,
+      "quantity": 1
+    },
+    "shipping_price": 1000
+  }
+}
+```
+
 ## POST /order : Crée une commande
 
 - Exemple de requête :
@@ -71,3 +91,7 @@
   }
 }
 ```
+
+# python_cours
+
+# python_cours
