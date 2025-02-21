@@ -50,6 +50,10 @@ def test_create_order(client):
             "quantity": 2
         },
     }
+
+    ## Test if order quantity is an integer
+    assert isinstance(order_data['product']['quantity'], int)
+    
     rv = client.post('/order', json=order_data)
     assert rv.status_code == 201
     data = rv.get_json()
@@ -103,14 +107,37 @@ def test_update_credit_card(client):
     order_data = {
         "credit_card": {
             "name": "Test Test",
-            "number": "1234567890123456",
-            "expiration_year": "2023",
-            "expiration_month": "12",
+            "number": "4242 4242 4242 4242",
+            "expiration_year": "2025",
+            "expiration_month": "9",
             "cvv": "123"
         },
     }
-    
+
     rv = client.patch('/order/1', json=order_data)
-    assert rv.status_code == 422
+    assert rv.status_code == 200
     data = rv.get_json()
-    assert data['errors']['credit_card']['code'] == "expired"
+    assert 'transaction' in data
+    assert str(data['transaction']['success']).lower() == 'true'  # Conversion en chaîne et comparaison insensible à la casse
+
+def payment(client):
+    order_data = {
+        "credit_card": {
+            "name": "Test Test",
+            "number": "4242 424 4242 4242",
+            "expiration_year": "2024",
+            "expiration_month": "9",
+            "cvv": "123"
+        },
+    }
+
+    rv = client.post('/order/1/',  json=order_data)
+    assert rv.status_code == 200
+    data = rv.get_json()
+    assert data['message'] == "Order successfully paid"
+    print(data)
+
+
+
+
+

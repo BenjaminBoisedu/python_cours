@@ -219,13 +219,35 @@ def Update_credit_card(id):
             }
         }}), 422
 
-    try:
-        Order.update(
-            credit_card=json.dumps(credit_card)
-        ).where(Order.id == id).execute()
-        return jsonify({"message": "Credit card updated successfully"}), 200
-    except Exception as e:
-        return jsonify({"error": "Failed to update credit card"}), 500
+    amount_charged = order.total_price_tax + order.shipping_price
+
+    url = "https://dimensweb.uqac.ca/~jgnault/shops/pay/"
+    response = requests.post(url, json={
+        "credit_card": {
+            "name": credit_card['name'],
+            "number": credit_card['number'],
+            "expiration_year": credit_card['expiration_year'],
+            "expiration_month": credit_card['expiration_month'],
+            "cvv": credit_card['cvv']
+        },
+        "amount_charged": amount_charged
+    })
+
+    if response.status_code != 200:
+        try:
+            return jsonify(response.json()), response.status_code
+        except requests.exceptions.JSONDecodeError:
+            return jsonify({"error": "An error occurred while processing the payment"}), response.status_code
+
+    order = Order.update(
+        credit_card=json.dumps(credit_card),
+        paid=True,
+        transaction=json.dumps(response.json())
+    ).where(Order.id == id).execute()
+
+    # You need to return the response from the payment API
+    return jsonify(response.json())
+
     
 
 
