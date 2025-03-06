@@ -6,11 +6,13 @@
 
 ## Commande pour lancer le serveur :
 
-- `FLASK_DEBUG=True FLASK_APP=Python_API.py flask run`
+- `FLASK_DEBUG=True FLASK_APP=Python_API.py flask run` -> Sous MacOS ou Linux
+- `$env:FLASK_DEBUG="True"; $env:FLASK_APP="Python_API.py"; flask run` -> Sous Windows
 
 ## Commande pour initialiser la base de données :
 
-- `FLASK_DEBUG=True FLASK_APP=Python_API.py flask init-db`
+- `FLASK_DEBUG=True FLASK_APP=Python_API.py flask init-db` -> Sous MacOS ou Linux
+- `$env:FLASK_DEBUG="True"; $env:FLASK_APP="Python_API.py"; flask init-db` -> Sous Windows
 
 ## Commande pour lancer les tests :
 
