@@ -1,5 +1,9 @@
 # Technologie Utilisée : Python
 
+## Installation des dépendances :
+
+- `pip install -r requirements.txt`
+
 ## Commande pour lancer le serveur :
 
 - `FLASK_DEBUG=True FLASK_APP=Python_API.py flask run`

@@ -239,10 +239,14 @@ def Update_credit_card(id):
         except requests.exceptions.JSONDecodeError:
             return jsonify({"error": "An error occurred while processing the payment"}), response.status_code
 
+    response_data = response.json()
+    transaction_data = response_data.get('transaction', {}) 
+    print (transaction_data)
+    
     order = Order.update(
         credit_card=json.dumps(credit_card),
-        paid=True,
-        transaction=json.dumps(response.json())
+        paid='true',
+        transaction=json.dumps(transaction_data)
     ).where(Order.id == id).execute()
 
     # You need to return the response from the payment API

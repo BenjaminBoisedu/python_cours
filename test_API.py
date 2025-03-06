@@ -118,7 +118,8 @@ def test_update_credit_card(client):
     assert rv.status_code == 200
     data = rv.get_json()
     assert 'transaction' in data
-    assert str(data['transaction']['success']).lower() == 'true'  # Conversion en chaîne et comparaison insensible à la casse
+    # Vérifier que la transaction est un succès
+    assert data['transaction']['success'] == 'true'
 
 def payment(client):
     order_data = {
